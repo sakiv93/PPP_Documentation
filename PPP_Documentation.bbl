@@ -1,0 +1,50 @@
+\begin{thebibliography}{1}
+
+\bibitem{abaqus10version}
+Abaqus~Documentation ABAQUS.
+\newblock Version 6.13. 2014.
+\newblock {\em Dassault Systemes: 3DS Paris Campus}, 10.
+
+\bibitem{agrawal2019iga}
+Vishal Agrawal and Sachin~S Gautam.
+\newblock Iga: A simplified introduction and implementation details for finite
+  element users.
+\newblock {\em Journal of The Institution of Engineers (India): Series C},
+  100(3):561--585, 2019.
+
+\bibitem{kozinov2018simulation}
+S~Kozinov and M~Kuna.
+\newblock Simulation of fatigue damage in ferroelectric polycrystals under
+  mechanical/electrical loading.
+\newblock {\em Journal of the Mechanics and Physics of Solids}, 116:150--170,
+  2018.
+
+\bibitem{nguyen2012introduction}
+Vinh~Phu Nguyen, Robert~N Simpson, SPA Bordas, and Timon Rabczuk.
+\newblock An introduction to isogeometric analysis with matlab implementation:
+  Fem and xfem formulations.
+\newblock {\em arXiv preprint arXiv:1205.2129}, page~26, 2012.
+
+\bibitem{nguyen2018finite}
+Vinh-Tan Nguyen, Pankaj Kumar, and Jason Yu~Chuan Leong.
+\newblock Finite element modellingand simulations of piezoelectric actuators
+  responses with uncertainty quantification.
+\newblock {\em Computation}, 6(4):60, 2018.
+
+\bibitem{piegl2012nurbs}
+Les Piegl and Wayne Tiller.
+\newblock {\em The NURBS book}.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{shah2015stress}
+Mit Shah and Ravi Katukam.
+\newblock Stress analysis without meshing iso-geometric analysis finite element
+  method (igafem).
+\newblock {\em Boeing Summer Internship Project}, 2015.
+
+\bibitem{siggel2017tigl}
+Martin Siggel, Merlin Pelz, Konstantin Rusch, Jan Kleinert, and DLR Cologne.
+\newblock The tigl geometry library and its current mathematical challenges.
+\newblock In {\em Workshop DLR/Cologne University}, 2017.
+
+\end{thebibliography}
