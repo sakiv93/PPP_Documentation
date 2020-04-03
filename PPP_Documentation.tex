@@ -68,7 +68,7 @@
 \section{Introduction}
 Among all the numerical methods, Finite Element Methods (FEM) are more popularly used to find approximate solutions of partial differential equations. FEM approximates the Computer Aided Drawing (CAD) geometry by discretizing it into smaller geometries called elements. Such geometrical approximations may create numerical errors and seriously affect the accuracy of the solution. Isogeometric analysis (IGA), on the other hand, is a technique to generate geometry using CAD concept of Non-Uniform Rational B-Splines (NURBS) and analyze using its basis functions \cite{agrawal2019iga}. With the use of NURBS basis functions instead of Lagrangian basis functions, the geometry is captured exactly for the analysis and rules out the possibility of the geometrical errors. Moreover, the time from design to analysis phase is greatly reduced, saving the cost and time for the industry. The IGA technique is firstly pioneered by Tom Hughes and his group at The University of Texas at Austin.\\
 \par
-In the present programming project, python code is developed, which can generate any 2D NURBS surface, given the physical and parametric details of the geometry. Few commercial software (for example, Rhino) can be used to get the parametric details of the surface. Later the code is extended to analyze the linear elastic mechanical loading case as a displacement driven algorithm. Further, the electro-mechanical coupling is added. The written code gives accurate results for a 2nd order NURBS basis functions. For higher-order basis functions, a particular treatment is required for defining boundary conditions like least square minimization technique. The results have been verified using Abaqus results. Comparing the IGA program generated results with Abaqus elements output is justified because IGA aims at reducing the approximation from traditional FEM procedures.    
+In the present programming project, Python code is developed, which can generate any 2D NURBS surface, given the physical and parametric details of the geometry. Few commercial software (for example, Rhino) can be used to get the parametric details of the surface. Later the code is extended to analyze the linear elastic mechanical loading case as a displacement driven algorithm. Further, the electro-mechanical coupling is added. The written code gives accurate results for a 2nd order NURBS basis functions. For higher-order basis functions, a particular treatment is required for defining boundary conditions like least square minimization technique (an exception is when all the control points are on the surface itself). The results have been verified using Abaqus results. Comparing the IGA program generated results with Abaqus elements output is justified because IGA aims at reducing the approximation from traditional FEM procedures.    
 
 \subsection{Advantages of IGA over FEA}
 \begin{description}[leftmargin=*]
@@ -84,7 +84,7 @@ In the present programming project, python code is developed, which can generate
 In this section, a brief description of B-Splines is discussed since NURBS is an extended version of B-Splines. A B-Spline basis function is defined by its order and knot vectors. A B-spline basis function, along with control points, defines a B-Spline curve. A surface or volume can be generated using a curve by tensor product between its basis functions, which will be discussed in detail in the future sections.
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[scale=0.8]{B_Spline.png} 
+		\includegraphics[scale=0.7]{B_Spline.png} 
 		\caption{\\A B-Spline curve with six control points}\label{B_Spline}
 	\end{center}	
 \end{figure}
@@ -92,7 +92,7 @@ In this section, a brief description of B-Splines is discussed since NURBS is an
 For a point on a B-Spline curve, the order of the basis function speaks about the number of nearby control points that influence the given point. The degree $p$ of the basis function is one less than the order of the curve. The following figure shows a B-Spline curve with the same number and position of control points but with different orders.
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[scale=0.8]{DegreeBspline.png} 
+		\includegraphics[scale=0.7]{DegreeBspline.png} 
 		\caption{\\B-Spline curves with same control points but different order}\label{DegreeBspline}
 	\end{center}	
 \end{figure}
@@ -151,15 +151,15 @@ N_{i,0}(\xi) =
 	\end{center}	
 \end{figure}
 \noindent
-The following python function outputs non zero basis functions in a given knot vector span
+The following Python function outputs non zero basis functions in a given knot vector span
 \begin{verbatim}
 -----------------------------------------------------------------------------------
-def BasisFuns(i,u,p,U):
+def BasisFuns(i,xi,p,XI):
 #----------Inputs---------#
-i - knot span
-u - parametric coordinate
-p - Degree of the curve
-U - knot vector of the curve
+i  - knot span
+xi - parametric coordinate
+p  - Degree of the curve
+XI - knot vector of the curve
 #----------Outputs---------#
 non zero basis functions for the given parametric coordinate
 -----------------------------------------------------------------------------------
@@ -176,19 +176,19 @@ given by
 
 \noindent
 Higher-order derivatives are not necessary for IGA formulation.\\
-The following python function outputs derivatives of non zero basis functions in a given knot vector span.
+The following Python function outputs derivatives of non zero basis functions in a given knot vector span.
 \begin{verbatim}
 -----------------------------------------------------------------------------------
-def DersBasisFuns(i,u,p,m,U):
+def DersBasisFuns(i,xi,p,g,XI):
 #----------Inputs---------#
-i - knot span
-u - parametric coordinate
-p - Degree of the curve
-U - knot vector of the curve
-m - derivatives upto and including m(th) 
+i  - knot span
+xi - parametric coordinate
+p  - Degree of the curve
+XI - knot vector of the curve
+g  - derivatives upto and including g(th) 
 #----------Outputs---------#
 The function returns non zero basis functions and their derivatives
-upto and including mth derivative for the given parametric coordinate
+upto and including gth derivative for the given parametric coordinate
 -----------------------------------------------------------------------------------
 \end{verbatim}
 
@@ -375,22 +375,22 @@ This section describes the step-by-step implementation of the Isogeometric analy
 	
 \end{figure}
 \subsection{Pre-processing Stage of the Analysis}
-This subsection mainly deals with NURBS based geometry creation, types of assembly arrays needed to assemble discretized geometries and how to deal with homogeneous and non-homogeneous boundary conditions on boundary defining control points due to their higher ($C^{p-1}$) continuity unlike $C^{0}$ continuity of FEM nodes.
+This subsection mainly deals with NURBS based geometry creation, types of assembly arrays needed to assemble discretized geometries and how to deal with homogeneous and non-homogeneous boundary conditions on boundary defining control points.
 
 \subsubsection{Geometry Creation} \label{GeometryCreation}
-As mentioned before in the section \ref{NURBS}, apart from the physical details of the geometry like length, width and thickness etc. the construction of NURBS discretized geometry requires parametric details such as control points, knot vectors and the order of the NURBS curve. Commercial software like "Rhino" can be used to extract parametric details of the complex NURBS geometry. \\ The following function in python is used for finding a point on the NURBS surface.
+As mentioned before in the section \ref{NURBS}, apart from the physical details of the geometry like length, width and thickness etc. the construction of NURBS discretized geometry requires parametric details such as control points, knot vectors and the order of the NURBS curve. Commercial software like "Rhino" can be used to extract parametric details of the complex NURBS geometry. \\ The following function in Python is used for finding a point on the NURBS surface.
 \begin{verbatim}
-NURBS_Surface_Point(n,p,U,m,q,V,Pw,u,v)
+def NURBS_Surface_Point(n,p,XI,m,q,ETA,Pw,xi,eta):
 \end{verbatim}
-Where, p and q are the degrees of the NURBS curve in $\xi$ and $\eta$ directions respectively, Pw control points vector, U and V are knot vectors in $\xi$ and $\eta$ directions respectively. 
+Where, p and q are the degrees of the NURBS curve in $\xi$ and $\eta$ directions respectively, Pw control points vector, XI and ETA are knot vectors in $\xi$ and $\eta$ directions respectively. 
 n and m are calculated using below code
 \begin{verbatim}
-n=(np.size(U)-1)-p-1
-m=(np.size(V)-1)-q-1 
+n=(np.size(XI)-1) -p-1
+m=(np.size(ETA)-1)-q-1 
 \end{verbatim}
-u and v are any points in knot span, for example if 
-$U = \{0,0,1,2,3,4,4\}$,
-u can be 2.5 which belongs to knot span $\{2,3\}$ in U.\\
+xi and eta are any points in knot span, for example if 
+$XI = \{0,0,1,2,3,4,4\}$,
+xi can be 2.5 which belongs to knot span $\{2,3\}$ in XI.\\
 The entire surface can be generated by looping over knot span points and by extracting surface points by using the above function and plotting the output. 
 An example output of the geometry generated with the written code is shown below
 \begin{figure}[H]
@@ -406,8 +406,8 @@ Pw=
 [[-2.5,0.,0.,1.],[-2.5,0.75,0.,1.],[-0.75,2.5,0.,1.],[0.,2.5,0.,1.]],
 [[-4,0.,0.,1.],[-4,4.,0.,1.],[-4.,4.,0.,1.],[0.,4.,0.,1.]]
 p=2 and q=2 # Degree of the curve in xi and eta directions
-U = [0., 0., 0., 1., 2., 2., 2.]
-V = [0., 0., 0., 1., 1., 1.]
+XI  = [0., 0., 0., 1., 2., 2., 2.]
+ETA = [0., 0., 0., 1., 1., 1.]
 \end{verbatim}
 
 
@@ -449,21 +449,21 @@ Assembly arrays are required to assemble local discretized geometries to global 
 		\end{center}	
 	\end{figure}
 	\item Knot vector connectivity array: \\
-	The knot vector connectivity matrix \textbf{CP} is a row-wise matrix with each row corresponds to the respective element. The columns correspond to span ranges (Span$\_$U and Span$\_$V) along $\xi$ and $\eta$ directions. \\
+	The knot vector connectivity matrix \textbf{CP} is a row-wise matrix with each row corresponds to the respective element. The columns correspond to span ranges (Span$\_$XI and Span$\_$ETA) along $\xi$ and $\eta$ directions. \\
 	Knot vector array along $\xi$ and $\eta$ direction for geometry, Fig.(\ref{Element}): \\
-	$U = [ 0, 0, 1, 2, 2 ]$ \\
-	$V = [ 0, 0, 1, 1 ]$ \\
-	Span$\_$U is a 2D array which has rows equal to number of elements in $\xi$ direction.
-	\begin{equation} \label{SpanU}
-	\textbf{Span\_U} =
+	$XI  = [ 0, 0, 1, 2, 2 ]$ \\
+	$ETA = [ 0, 0, 1, 1 ]$ \\
+	Span$\_$XI is a 2D array which has rows equal to number of elements in $\xi$ direction.
+	\begin{equation} \label{SpanXI}
+	\textbf{Span\_XI} =
 	\begin{bmatrix}
 	0 & 1  \\
 	1 & 2  \\
 	\end{bmatrix}
 	\end{equation}
 	Similarly with only one element along $\eta$ direction
-	\begin{equation} \label{SpanU}
-	\textbf{Span\_V} =
+	\begin{equation} \label{SpanETA}
+	\textbf{Span\_ETA} =
 	\begin{bmatrix}
 	0 & 1  \\
 	\end{bmatrix}
@@ -479,25 +479,26 @@ Assembly arrays are required to assemble local discretized geometries to global 
 \\
 	The following lines of code executes Knot Connectivity array
 	\begin{verbatim}
-	uniqueU = np.unique(U)
-	uniqueV = np.unique(V)
-	nelU = ncpxi-p
-	nelV = ncpeta-q
-	CP = np.zeros((nel,2)) 
-	Span_U=np.zeros((nelU,2))#Span_U have rows equal to number of elements in xi direction
-	Span_V=np.zeros((nelV,2))#Span_V have rows equal to number of elements in eta direction
+	uniqueXI  = np.unique(XI)
+	uniqueETA = np.unique(ETA)
+	nelXI  = ncpxi-p
+	nelETA = ncpeta-q
+	knotConnectivity = np.zeros((nel,2)) 
+	Span_XI  = np.zeros((nelXI,2))
+	#Span_XI have rows equal to number of elements in xi direction
+	Span_ETA = np.zeros((nelETA,2))
+	#Span_ETA have rows equal to number of elements in eta direction
 	count=0
-	for i in range(0,nelV):
-	for j in range(0,nelU):
-	CP[count,:] = [j+1,i+1] 
-	# First and second coloumns of 'knotConnectivity' store the global number of knot 
-	span ranges
-	# or row number of Span_U and Span_V arrays
-	Span_U[j,:]= [uniqueU[j],uniqueU[j+1]]
-	Span_V[i,:]= [uniqueV[i],uniqueV[i+1]]
+	for i in range(0,nelETA):
+	for j in range(0,nelXI):
+	knotConnectivity[count,:] = [j+1,i+1] 
+	# First and second coloumns of 'knotConnectivity' store the global number of knot span ranges
+	# or row number of Span_XI and Span_ETA arrays
+	Span_XI[j,:]= [uniqueXI[j],uniqueXI[j+1]]
+	Span_ETA[i,:]= [uniqueETA[i],uniqueETA[i+1]]
 	count=count+1
-	CP = knotConnectivity -1
-	CP = CP.astype(int)
+	knotConnectivity = knotConnectivity -1
+	knotConnectivity = knotConnectivity.astype(int)
 	\end{verbatim} 
 	
 	
@@ -506,7 +507,7 @@ Assembly arrays are required to assemble local discretized geometries to global 
 	\end{verbatim}
 \end{enumerate}
 \subsubsection{Boundary Conditions}
-A brief description of how to define boundary conditions (BCS) is described in this section. When the order of the NURBS curve is two in each direction, a traditional way of defining homogeneous and inhomogeneous boundary conditions as in FEM can be followed. In any other case, a special treatment for defining BCS have to be followed, which is not in the scope of this project. Procedures like the least square minimization method are usually adopted for this purpose. 
+A brief description of how to define boundary conditions (BCS) is described in this section. When the order of the NURBS curve is two in each direction, a traditional way of defining homogeneous and inhomogeneous boundary conditions as in FEM can be followed. In any other case, a special treatment for defining BCS have to be followed, which is not in the scope of this project. As discussed before, an exception is when all the control points are on the surface itself, we can use common way of defining BCS. Procedures like the least square minimization method are usually adopted for this purpose. 
 
 
 \subsection{Processing Stage of the Analysis} \label{ProcessingStage}
@@ -605,10 +606,10 @@ number of Gauss points and their respective Gauss weights.\\
 The following function is used to get the J1 and J2 matrix along with their determinants.
 \begin{verbatim}
 --------------------------------------------------------------
-def Jacobian12(xi,eta,elU,elV):
+def Jacobian12(xi,eta,elXI,elETA):
 #-----------------Input------------------#
 Parametric Co-ordinates (xi,eta) of Gauss Points
-Knot span range (elU,elV) in xi and eta direction
+Knot span range (elXI,elETA) in xi and eta direction
 #-----------------Output-----------------#
 J1 and J2 matrices along with their determinants
 --------------------------------------------------------------
@@ -636,9 +637,9 @@ displacement and solution dependent variables are plotted.
 	\\
 	$[\textbf{P}_{new}]$ control points array is used to plot the deformed
 	geometry.
-	As discussed in section (\ref{GeometryCreation}), instead of initial control point matrix of the geometry \textbf{P}, \textbf{$P_{new}$} is given as input to the function 
+	As discussed in section (\ref{GeometryCreation}), instead of initial control point matrix of the geometry \textbf{P}, \textbf{$P_{new}$} is given as input to the function as a transpose 
 	\begin{verbatim}
-	def NURBS_Surface_Point(n,p,U,m,q,V,P_new,u,v):
+	def NURBS_Surface_Point(n,p,XI,m,q,ETA,Pw_new,xi,eta):
 	\end{verbatim}
 	and the deformed geometry can be plotted.
 	 
@@ -980,7 +981,7 @@ Newton-Raphson method for displacements and potential solution fields.
 
 \newpage
 \section{Modelling and Results}
-\subsection{2D Plate with linear elastic loading} 
+\subsection{2D Plate under linear elastic loading} 
 \subsubsection{Problem description} \label{2DPWLELPD}
 A 2D plate is subjected to mechanical loading as shown in Figure(\ref{XYLoading}). The material used is PZT-PIC151 ceramics \cite{kozinov2018simulation}, and the elastic constants of the material are given in the appendix (\ref{MaterialProps}).
 The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction. A displacement of 0.1 mm is given on the right edge BD.
@@ -1002,16 +1003,6 @@ The movement of bottom edge AB is fixed in y-direction and left edge AC in x-dir
 \subsubsection{Parametric details for the plate with single element}
 \label{ParametricDeatils1Elem}
 The 2nd order NURBS curve is used in both $\xi$ and $\eta$ directions. \\
-\begin{comment}
-The knot vectors along $\xi$ and $\eta$ directions are \\
-$\Xi= [0,0,1,1]$ and $\eta= [0,0,1,1]$. \\
-Control points along $\xi$ direction is given by \\
-$n_{cp}(\xi)$ = total number of knots in $[\Xi] - (p+1) = 2$.\\
-Similarly the total number of control points along $\eta$ direction is given
-by\\ $n_{cp}(\eta)$ = total number of knots in $[H ]- (q+1) = 2$ . \\
-The total number of control points which defines the surface is\\
-$n_{cp}$ = $n_{cp}(\xi) * n_{cp}(\eta)$ which is $2*2 = 4$. \\
-\end{comment}
 %\begin{verbatim}
 \begin{enumerate}
 	\item Physical details for the geometry: \\
@@ -1068,7 +1059,7 @@ $n_{cp}$ = $n_{cp}(\xi) * n_{cp}(\eta)$ which is $2*2 = 4$. \\
 Considering the accuracy of the IGA simulation results over FEM results, IGA code generated results can be compared with the Abaqus inbuilt element generated results. An Abaqus plane strain full integration element (\textbf{CPE4}) \cite{abaqus10version} is used for this purpose.
 \\The below figures show the values of displacements (U) and reaction forces (RF ) for both Abaqus and IGA element.\\
 
-\textbf{**A similar contour is used for the program generated results and Abaqus results for easy comparison. }\\
+\textbf{A similar contour is used for the program generated results and Abaqus results for easy comparison. }\\
 Figure(\ref{M1U1}) and Figure(\ref{M1U1_IGA}) show the displacement (U1) values of the single CPE4 element and single IGA element at 100 \% loading in x-direction respectively. \\
 \begin{figure}[H]
 	\centering
@@ -1138,7 +1129,7 @@ Figure(\ref{M1RF1}) and Figure(\ref{M1RF1_IGA}) show the Reaction force values (
 	\end{minipage}
 \end{figure}
 
-*** Reaction force in the y-direction is not reported since the loading is given only in the x-direction, and for the given fixed BCS, the RF2 is negligible.  \\
+\textbf{Reaction force in the y-direction is not reported since the loading is given only in the x-direction, and for the given fixed BCS, the RF2 is negligible.}  \\
 
 \subsubsection{Conclusion}
 As shown in figures above the values generated by IGA code are in-line with the results of the Abaqus element. So it can be concluded that IGA code written works well with 2D one element case.
@@ -1148,7 +1139,7 @@ As shown in figures above the values generated by IGA code are in-line with the 
 
 
 
-\subsection{2D Plate with pure Electrical loading}
+\subsection{2D Plate under pure Electrical loading}
 \subsubsection{Problem description}\label{2DPWPELPD}
 A 2D plate is subjected to Electrical loading as shown in Figure(\ref{PureElectrical22}).The material used is PZT-PIC151 ceramics, and the dielectric constants can be seen in Appendix (\ref{MaterialProps})
 The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction.The top edge CD is grounded ( potential = 0 volts). An electrical potential V of 1000 volts is applied on bottom edge AB as shown in Fig. (\ref{PureElectrical22})
@@ -1174,9 +1165,9 @@ The parametric details for the geometry are the same as in section \hyperref[Par
 
 \subsubsection{Results and discussions}
 In this section the comparison is made between IGA code generated result and Abaqus plane strain full integration piezoelectric element (\textbf{CPE4E}) \cite{abaqus10version}.\\The below figures shows the values of Electrical potentials (EPOT) and reactive electrical nodal charge (RCHG) for both Abaqus and IGA element.\\
-\\\textbf{*** Electro-mechanical coupling is deactivated in this case by giving all the piezoelectric constants a value of "zero"  }
+\\\textbf{Electro-mechanical coupling is deactivated in this case by giving all the piezoelectric constants a value of "zero"  }
 \\
-\textbf{***A similar contour is used for the program generated results and the Abaqus results for easy comparison. }\\
+\textbf{A similar contour is used for the program generated results and the Abaqus results for easy comparison. }\\
 \\
 Figure(\ref{E1EPOT}) and Figure(\ref{E1EPOT_IGA}) show the Electrical potential (EPOT) values of the single CPE4E element and single IGA element at 100 \% loading respectively. \\
 \begin{figure}[H]
@@ -1232,7 +1223,7 @@ As shown in the figures above, the values generated by the IGA code are in line 
 
 
 
-\subsection{2D Piezoelectric plate with mechanical loading}
+\subsection{2D Piezoelectric plate under mechanical loading}
 \subsubsection{Problem description} \label{2DPPWMLPD}
 A 2D piezoelectric plate subjected to mechanical displacements is considered, as shown in Fig. (\ref{EMLoading}) . The material used is PZT-PIC151 ceramics, and the properties can be seen in the Appendix (\ref{MaterialProps})
 
@@ -1428,7 +1419,7 @@ $$
 	A control point assembly array and knot vector connectivity matrix are used to connect the elements.
 \end{enumerate}
 
-\subsubsection{Results and discussions}
+\subsubsection{Results and discussions} \label{RSD2DPPUML}
 Abaqus plane strain full integration piezoelectric element (\textbf{CPE4E}) is used for analysis. For the comparison between Abaqus and IGA elements, 2 elements, along the x-direction and 3 elements along the y-direction, are used. A different number of elements are used along each direction in order to verify if the code generates proper results in unsymmetric conditions as well w.r.t number of elements in each direction.\\
 The \textbf{blue points} on the program generated results are the final position of the control points at 100 \% loading.\\
 The below figures shows the values of displacements (U), electrical potentials (EPOT) and reaction forces (RF ) for both Abaqus and IGA elements.\\
@@ -1525,7 +1516,7 @@ As shown in figures above for a 6 elements case, the results generated by IGA co
 
 
 
-\subsection{2D Piezoelectric plate with electrical loading}
+\subsection{2D Piezoelectric plate under electrical loading}
 \subsubsection{Problem description} \label{2DPPWEL}
 A 2D piezoelectric plate subjected to electrical loading is considered, as shown in Fig. (\ref{PureElectrical}) . The material used is PZT-PIC151 ceramics, and the properties can be seen in the Appendix (\ref{MaterialProps})
 
@@ -1749,6 +1740,77 @@ Figure(\ref{EME23RCHG}) and Figure(\ref{EME23RCHG_IGA}) show the Reactive electr
 \subsubsection{Conclusion}
 As shown in figures above for a 6 elements case, the results generated by IGA code are in line with the results of the Abaqus elements.  
 
+\subsection{2D Piezoelectric plate under mechanical loading with higher-order NURBS basis functions }
+\subsubsection{Problem description}
+
+The problem statement is same as in section (\ref{2DPPWMLPD}) (2D Piezoelectric plate under mechanical loading).
+
+\subsubsection{Order of NURBS basis functions}
+In the present load case, a 3rd order basis function in $\xi$ direction and 4th order basis function in $\eta$ direction is considered.
+
+\subsubsection{Results and discussions}
+
+The displacement (U) values and potential (EPOT) values generated with higher-order NURBS basis functions with more number of control points are compared with the results from section (\ref{RSD2DPPUML}) (Results with 6 elements).
+More control points are used for results only to differentiate between 2nd and higher-order basis functions.
+\\
+Figure(\ref{EM23U1_IGA_1}) and Figure(\ref{HEM12U1_IGA}) show the displacement (U1) values of the 2nd order NURBS surface and higher-order NURBS surface at 100 \% loading in x-direction respectively. \\
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{EM23U1_IGA.png}
+		\captionof{figure}{IGA Piezoelectric Element:U1
+			\\\textbf{2nd order NURBS surface}}
+		\label{EM23U1_IGA_1}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{HEM12U1_IGA.png}
+		\captionof{figure}{IGA Piezoelectric Element:U1\\ \textbf{Higher-order NURBS surface}}
+		\label{HEM12U1_IGA}
+	\end{minipage}
+\end{figure}
+\noindent
+Figure(\ref{EM23U2_IGA_1}) and Figure(\ref{HEM12U2_IGA}) show the displacement (U2) values of the 2nd order NURBS surface and higher-order NURBS surface at 100 \% loading in the y-direction respectively. \\
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{EM23U2_IGA.png}
+		\captionof{figure}{IGA Piezoelectric Element:U2
+			\\\textbf{2nd order NURBS surface}}
+		\label{EM23U2_IGA_1}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{HEM12U2_IGA.png}
+		\captionof{figure}{IGA Piezoelectric Element:U2\\ \textbf{Higher-order NURBS surface}}
+		\label{HEM12U2_IGA}
+	\end{minipage}
+\end{figure}
+
+Figure(\ref{EM23EPOT_IGA_1}) and Figure(\ref{HEM12EPOT_IGA}) show the Electrical potential (EPOT) values of the 2nd order NURBS surface and higher-order NURBS surface at 100 \% loading respectively. \\
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{EM23EPOT_IGA.png}
+		\captionof{figure}{IGA Piezoelectric Element:EPOT
+			\\\textbf{2nd order NURBS surface}}
+		\label{EM23EPOT_IGA_1}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{HEM12EPOT_IGA.png}
+		\captionof{figure}{IGA Piezoelectric Element:EPOT\\ \textbf{Higher-order NURBS surface}}
+		\label{HEM12EPOT_IGA}
+	\end{minipage}
+\end{figure}
+
+\subsubsection{Conclusion}
+Since the surface is captured exactly in both the cases (2nd order and higher-order NURBS surface) we can expect the same results for DOF values on control points.  
+
 
 
 
@@ -1785,7 +1847,7 @@ To develop a code for Isogeometric analysis, it demands the understanding of NUR
 
 \newpage
 \section{Conclusion}
-In this project, an Isogeometric analysis code is developed to create NURBS surface using parametric details and use the same basis functions to analyze Linear elastic mechanical loading and later extended to electro-mechanical coupling. The code is written in such a way that, it can analyze a 2D geometry with up to 4th order NURBS basis functions ( the order of the basis functions in each direction can vary, for example, a surface can be generated using 3rd order basis functions in $\xi$ direction and 2nd order basis functions in $\eta$ direction). The drawback of the written code is, it gives accurate results for a 2nd order NURBS basis functions but fails to produce correct results for higher-order basis functions. This is because unlike FEM, where boundary conditions can be applied on nodes, the same procedure cannot be followed for IGA where basis functions have higher continuity, unlike $C^0$ continuity at nodes in FEM. The results of the IGA code are verified with the Abaqus elements for 2nd order NURBS 	curve.
+In this project, an Isogeometric analysis code is developed to create NURBS surface using parametric details and use the same basis functions to analyze Linear elastic mechanical loading and later extended to electro-mechanical coupling. The code is written in such a way that, it can analyze a 2D geometry with up to 4th order NURBS basis functions ( the order of the basis functions in each direction can vary, for example, a surface can be generated using 3rd order basis functions in $\xi$ direction and 2nd order basis functions in $\eta$ direction). The drawback of the written code is, it gives accurate results for a 2nd order NURBS basis functions but fails to produce correct results for higher-order basis functions. This is because unlike FEM, where boundary conditions can be applied on nodes, the same procedure cannot be followed for IGA.  The control points may not lie on the surface for higher-order NURBS surface, and points defining the boundary needs to be identified. The results of the IGA code are verified with the Abaqus elements for 2nd order NURBS curve.
 
 \subsection{Continuation Strategy}
 
@@ -1801,29 +1863,29 @@ PZT-PIC151 ceramics and the properties \cite{kozinov2018simulation} are as follo
 
 $$
 C = \begin{bmatrix}
-139000 & 74280 & 77840 & 0 & 0 & 0\\
-47280 & 115400 & 74280 & 0 & 0 & 0\\
-77840 & 74280 & 139000 & 0 & 0 & 0\\
-0 & 0 & 0 & 25640 & 0 & 0\\
-0 & 0 & 0 & 0 & 25640 & 0\\
-0 & 0 & 0 & 0 & 0 & 25640\\
+110,000 & 64,000 & 63,000 & 0 & 0 & 0\\
+64,000 & 100,000 & 64,000 & 0 & 0 & 0\\
+63,000 & 64,000 & 110,000 & 0 & 0 & 0\\
+0 & 0 & 0 & 20,000 & 0 & 0\\
+0 & 0 & 0 & 0 & 20,000 & 0\\
+0 & 0 & 0 & 0 & 0 & 23,500\\
 \end{bmatrix} MPa
 $$  
 $$
 e = \begin{bmatrix}
-0 & -5.20710E-6 & 0 \\
-0 & 15.08E-6 & 0 \\
-0 & -5.207E-6 & 0\\
-12.710E-6 & 0 & 0 \\
+0 & -9.6e-6 & 0 \\
+0 & 15.1e-6 & 0 \\
+0 & -9.6e-6 & 0\\
+12.0e-6 & 0 & 0 \\
 0 & 0 & 0 \\
-0 & 0 & 12.710E-6 \\
+0 & 0 & 12.0e-6 \\
 \end{bmatrix} C/ mm`2
 $$
 $$
 \varepsilon = \begin{bmatrix}
-6.752E-12 & 0 & 0 \\
-0 & 5.872E-12 & 0 \\
-0 & 0 & 6.752E-12\\
+7.54e-12 & 0 & 0 \\
+0 & 9.82e-12 & 0 \\
+0 & 0 & 7.54e-12\\
 \end{bmatrix} C/(V mm)
 $$
 where \\
