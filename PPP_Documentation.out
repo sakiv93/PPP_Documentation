@@ -66,10 +66,16 @@
 \BOOKMARK [3][-]{subsubsection.7.5.2}{Order of NURBS basis functions}{subsection.7.5}% 66
 \BOOKMARK [3][-]{subsubsection.7.5.3}{Results and discussions}{subsection.7.5}% 67
 \BOOKMARK [3][-]{subsubsection.7.5.4}{Conclusion}{subsection.7.5}% 68
-\BOOKMARK [1][-]{section.8}{Milestones achieved}{}% 69
-\BOOKMARK [1][-]{section.9}{Intricacies of Isogeometric analysis}{}% 70
-\BOOKMARK [1][-]{section.10}{Conclusion}{}% 71
-\BOOKMARK [2][-]{subsection.10.1}{Continuation Strategy}{section.10}% 72
-\BOOKMARK [1][-]{section.11}{Appendices}{}% 73
-\BOOKMARK [2][-]{subsection.11.1}{Material Properties}{section.11}% 74
-\BOOKMARK [1][-]{section*.45}{References}{}% 75
+\BOOKMARK [1][-]{section.8}{Bottleneck in the code}{}% 69
+\BOOKMARK [2][-]{subsection.8.1}{Aim}{section.8}% 70
+\BOOKMARK [2][-]{subsection.8.2}{Problem description}{section.8}% 71
+\BOOKMARK [2][-]{subsection.8.3}{Findings and Conclusion}{section.8}% 72
+\BOOKMARK [1][-]{section.9}{Milestones achieved}{}% 73
+\BOOKMARK [1][-]{section.10}{Intricacies of Isogeometric analysis}{}% 74
+\BOOKMARK [1][-]{section.11}{How to run the Program}{}% 75
+\BOOKMARK [1][-]{section.12}{Conclusion}{}% 76
+\BOOKMARK [2][-]{subsection.12.1}{Continuation Strategy}{section.12}% 77
+\BOOKMARK [1][-]{section.13}{Appendices}{}% 78
+\BOOKMARK [2][-]{subsection.13.1}{Material Properties}{section.13}% 79
+\BOOKMARK [1][-]{section.14}{Git log}{}% 80
+\BOOKMARK [1][-]{section*.48}{References}{}% 81

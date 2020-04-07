@@ -24,52 +24,58 @@
 \contentsline {subsubsection}{\numberline {4.1.3}Boundary Conditions}{15}{subsubsection.4.1.3}% 
 \contentsline {subsection}{\numberline {4.2}Processing Stage of the Analysis}{15}{subsection.4.2}% 
 \contentsline {subsection}{\numberline {4.3}Post-processing Stage of the Analysis}{18}{subsection.4.3}% 
-\contentsline {section}{\numberline {5}Mechanical Case}{19}{section.5}% 
-\contentsline {subsection}{\numberline {5.1}Governing Equations}{19}{subsection.5.1}% 
-\contentsline {subsection}{\numberline {5.2}Weak Formulation}{19}{subsection.5.2}% 
-\contentsline {subsection}{\numberline {5.3}IGA Formulation}{19}{subsection.5.3}% 
-\contentsline {section}{\numberline {6}Piezoelectric Case}{21}{section.6}% 
-\contentsline {subsection}{\numberline {6.1}Governing Equations for Piezoelectric Materials}{21}{subsection.6.1}% 
-\contentsline {subsection}{\numberline {6.2}Weak Formulation}{21}{subsection.6.2}% 
-\contentsline {subsection}{\numberline {6.3}IGA Formulation}{21}{subsection.6.3}% 
-\contentsline {section}{\numberline {7}Modelling and Results}{24}{section.7}% 
-\contentsline {subsection}{\numberline {7.1}2D Plate under linear elastic loading}{24}{subsection.7.1}% 
-\contentsline {subsubsection}{\numberline {7.1.1}Problem description}{24}{subsubsection.7.1.1}% 
-\contentsline {subsubsection}{\numberline {7.1.2}Parametric details for the plate with single element}{24}{subsubsection.7.1.2}% 
-\contentsline {subsubsection}{\numberline {7.1.3}Results and discussions}{25}{subsubsection.7.1.3}% 
-\contentsline {subsubsection}{\numberline {7.1.4}Conclusion}{26}{subsubsection.7.1.4}% 
-\contentsline {subsection}{\numberline {7.2}2D Plate under pure Electrical loading}{26}{subsection.7.2}% 
-\contentsline {subsubsection}{\numberline {7.2.1}Problem description}{26}{subsubsection.7.2.1}% 
-\contentsline {subsubsection}{\numberline {7.2.2}Parametric details for the plate with single element}{27}{subsubsection.7.2.2}% 
-\contentsline {subsubsection}{\numberline {7.2.3}Results and discussions}{27}{subsubsection.7.2.3}% 
-\contentsline {subsubsection}{\numberline {7.2.4}Conclusion}{28}{subsubsection.7.2.4}% 
-\contentsline {subsection}{\numberline {7.3}2D Piezoelectric plate under mechanical loading}{28}{subsection.7.3}% 
-\contentsline {subsubsection}{\numberline {7.3.1}Problem description}{28}{subsubsection.7.3.1}% 
-\contentsline {subsubsection}{\numberline {7.3.2}Parametric details for the plate with single element}{29}{subsubsection.7.3.2}% 
-\contentsline {subsubsection}{\numberline {7.3.3}Results and discussions}{29}{subsubsection.7.3.3}% 
-\contentsline {subsubsection}{\numberline {7.3.4}Conclusion}{31}{subsubsection.7.3.4}% 
-\contentsline {subsubsection}{\numberline {7.3.5}Comparison of electro-mechanical coupling with pure mechanical case}{31}{subsubsection.7.3.5}% 
-\contentsline {subsubsection}{\numberline {7.3.6}Parametric details for the plate with 2 elements in x-direction and 3 elements in y-direction}{32}{subsubsection.7.3.6}% 
-\contentsline {subsubsection}{\numberline {7.3.7}Results and discussions}{32}{subsubsection.7.3.7}% 
-\contentsline {subsubsection}{\numberline {7.3.8}Conclusion}{34}{subsubsection.7.3.8}% 
-\contentsline {subsection}{\numberline {7.4}2D Piezoelectric plate under electrical loading}{34}{subsection.7.4}% 
-\contentsline {subsubsection}{\numberline {7.4.1}Problem description}{34}{subsubsection.7.4.1}% 
-\contentsline {subsubsection}{\numberline {7.4.2}Parametric details for the plate with single element}{35}{subsubsection.7.4.2}% 
-\contentsline {subsubsection}{\numberline {7.4.3}Results and discussions}{35}{subsubsection.7.4.3}% 
-\contentsline {subsubsection}{\numberline {7.4.4}Conclusion}{37}{subsubsection.7.4.4}% 
-\contentsline {subsubsection}{\numberline {7.4.5}Comparison of electro-mechanical coupling with pure electrical case}{37}{subsubsection.7.4.5}% 
-\contentsline {subsubsection}{\numberline {7.4.6}Parametric details for the plate with 2 elements in x-direction and 3 elements in y-direction}{38}{subsubsection.7.4.6}% 
-\contentsline {subsubsection}{\numberline {7.4.7}Results and discussions}{38}{subsubsection.7.4.7}% 
-\contentsline {subsubsection}{\numberline {7.4.8}Conclusion}{39}{subsubsection.7.4.8}% 
-\contentsline {subsection}{\numberline {7.5}2D Piezoelectric plate under mechanical loading with higher-order NURBS basis functions }{40}{subsection.7.5}% 
-\contentsline {subsubsection}{\numberline {7.5.1}Problem description}{40}{subsubsection.7.5.1}% 
-\contentsline {subsubsection}{\numberline {7.5.2}Order of NURBS basis functions}{40}{subsubsection.7.5.2}% 
-\contentsline {subsubsection}{\numberline {7.5.3}Results and discussions}{40}{subsubsection.7.5.3}% 
-\contentsline {subsubsection}{\numberline {7.5.4}Conclusion}{41}{subsubsection.7.5.4}% 
-\contentsline {section}{\numberline {8}Milestones achieved}{42}{section.8}% 
-\contentsline {section}{\numberline {9}Intricacies of Isogeometric analysis}{42}{section.9}% 
-\contentsline {section}{\numberline {10}Conclusion}{43}{section.10}% 
-\contentsline {subsection}{\numberline {10.1}Continuation Strategy}{43}{subsection.10.1}% 
-\contentsline {section}{\numberline {11}Appendices}{44}{section.11}% 
-\contentsline {subsection}{\numberline {11.1}Material Properties}{44}{subsection.11.1}% 
-\contentsline {section}{References}{44}{section*.45}% 
+\contentsline {section}{\numberline {5}Mechanical Case}{20}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Governing Equations}{20}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Weak Formulation}{20}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.3}IGA Formulation}{20}{subsection.5.3}% 
+\contentsline {section}{\numberline {6}Piezoelectric Case}{22}{section.6}% 
+\contentsline {subsection}{\numberline {6.1}Governing Equations for Piezoelectric Materials}{22}{subsection.6.1}% 
+\contentsline {subsection}{\numberline {6.2}Weak Formulation}{22}{subsection.6.2}% 
+\contentsline {subsection}{\numberline {6.3}IGA Formulation}{22}{subsection.6.3}% 
+\contentsline {section}{\numberline {7}Modelling and Results}{25}{section.7}% 
+\contentsline {subsection}{\numberline {7.1}2D Plate under linear elastic loading}{25}{subsection.7.1}% 
+\contentsline {subsubsection}{\numberline {7.1.1}Problem description}{25}{subsubsection.7.1.1}% 
+\contentsline {subsubsection}{\numberline {7.1.2}Parametric details for the plate with single element}{25}{subsubsection.7.1.2}% 
+\contentsline {subsubsection}{\numberline {7.1.3}Results and discussions}{26}{subsubsection.7.1.3}% 
+\contentsline {subsubsection}{\numberline {7.1.4}Conclusion}{27}{subsubsection.7.1.4}% 
+\contentsline {subsection}{\numberline {7.2}2D Plate under pure Electrical loading}{28}{subsection.7.2}% 
+\contentsline {subsubsection}{\numberline {7.2.1}Problem description}{28}{subsubsection.7.2.1}% 
+\contentsline {subsubsection}{\numberline {7.2.2}Parametric details for the plate with single element}{28}{subsubsection.7.2.2}% 
+\contentsline {subsubsection}{\numberline {7.2.3}Results and discussions}{28}{subsubsection.7.2.3}% 
+\contentsline {subsubsection}{\numberline {7.2.4}Conclusion}{29}{subsubsection.7.2.4}% 
+\contentsline {subsection}{\numberline {7.3}2D Piezoelectric plate under mechanical loading}{30}{subsection.7.3}% 
+\contentsline {subsubsection}{\numberline {7.3.1}Problem description}{30}{subsubsection.7.3.1}% 
+\contentsline {subsubsection}{\numberline {7.3.2}Parametric details for the plate with single element}{30}{subsubsection.7.3.2}% 
+\contentsline {subsubsection}{\numberline {7.3.3}Results and discussions}{30}{subsubsection.7.3.3}% 
+\contentsline {subsubsection}{\numberline {7.3.4}Conclusion}{32}{subsubsection.7.3.4}% 
+\contentsline {subsubsection}{\numberline {7.3.5}Comparison of electro-mechanical coupling with pure mechanical case}{32}{subsubsection.7.3.5}% 
+\contentsline {subsubsection}{\numberline {7.3.6}Parametric details for the plate with 2 elements in x-direction and 3 elements in y-direction}{33}{subsubsection.7.3.6}% 
+\contentsline {subsubsection}{\numberline {7.3.7}Results and discussions}{33}{subsubsection.7.3.7}% 
+\contentsline {subsubsection}{\numberline {7.3.8}Conclusion}{35}{subsubsection.7.3.8}% 
+\contentsline {subsection}{\numberline {7.4}2D Piezoelectric plate under electrical loading}{35}{subsection.7.4}% 
+\contentsline {subsubsection}{\numberline {7.4.1}Problem description}{35}{subsubsection.7.4.1}% 
+\contentsline {subsubsection}{\numberline {7.4.2}Parametric details for the plate with single element}{36}{subsubsection.7.4.2}% 
+\contentsline {subsubsection}{\numberline {7.4.3}Results and discussions}{36}{subsubsection.7.4.3}% 
+\contentsline {subsubsection}{\numberline {7.4.4}Conclusion}{38}{subsubsection.7.4.4}% 
+\contentsline {subsubsection}{\numberline {7.4.5}Comparison of electro-mechanical coupling with pure electrical case}{38}{subsubsection.7.4.5}% 
+\contentsline {subsubsection}{\numberline {7.4.6}Parametric details for the plate with 2 elements in x-direction and 3 elements in y-direction}{39}{subsubsection.7.4.6}% 
+\contentsline {subsubsection}{\numberline {7.4.7}Results and discussions}{39}{subsubsection.7.4.7}% 
+\contentsline {subsubsection}{\numberline {7.4.8}Conclusion}{41}{subsubsection.7.4.8}% 
+\contentsline {subsection}{\numberline {7.5}2D Piezoelectric plate under mechanical loading with higher-order NURBS basis functions }{41}{subsection.7.5}% 
+\contentsline {subsubsection}{\numberline {7.5.1}Problem description}{41}{subsubsection.7.5.1}% 
+\contentsline {subsubsection}{\numberline {7.5.2}Order of NURBS basis functions}{41}{subsubsection.7.5.2}% 
+\contentsline {subsubsection}{\numberline {7.5.3}Results and discussions}{41}{subsubsection.7.5.3}% 
+\contentsline {subsubsection}{\numberline {7.5.4}Conclusion}{43}{subsubsection.7.5.4}% 
+\contentsline {section}{\numberline {8}Bottleneck in the code}{44}{section.8}% 
+\contentsline {subsection}{\numberline {8.1}Aim}{44}{subsection.8.1}% 
+\contentsline {subsection}{\numberline {8.2}Problem description}{44}{subsection.8.2}% 
+\contentsline {subsection}{\numberline {8.3}Findings and Conclusion}{45}{subsection.8.3}% 
+\contentsline {section}{\numberline {9}Milestones achieved}{47}{section.9}% 
+\contentsline {section}{\numberline {10}Intricacies of Isogeometric analysis}{47}{section.10}% 
+\contentsline {section}{\numberline {11}How to run the Program}{48}{section.11}% 
+\contentsline {section}{\numberline {12}Conclusion}{49}{section.12}% 
+\contentsline {subsection}{\numberline {12.1}Continuation Strategy}{49}{subsection.12.1}% 
+\contentsline {section}{\numberline {13}Appendices}{50}{section.13}% 
+\contentsline {subsection}{\numberline {13.1}Material Properties}{50}{subsection.13.1}% 
+\contentsline {section}{\numberline {14}Git log}{51}{section.14}% 
+\contentsline {section}{References}{59}{section*.48}% 

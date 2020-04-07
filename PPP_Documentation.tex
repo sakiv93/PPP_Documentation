@@ -20,6 +20,9 @@
 \usepackage{enumitem,kantlipsum}
 \usepackage{verbatim}
 \usepackage{hyperref}
+\usepackage{spverbatim}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
 \begin{document}
 \begin{titlepage}
 	\centering
@@ -492,7 +495,8 @@ Assembly arrays are required to assemble local discretized geometries to global 
 	for i in range(0,nelETA):
 	for j in range(0,nelXI):
 	knotConnectivity[count,:] = [j+1,i+1] 
-	# First and second coloumns of 'knotConnectivity' store the global number of knot span ranges
+	# First and second coloumns of 'knotConnectivity' store the global number 
+	of knot span ranges
 	# or row number of Span_XI and Span_ETA arrays
 	Span_XI[j,:]= [uniqueXI[j],uniqueXI[j+1]]
 	Span_ETA[i,:]= [uniqueETA[i],uniqueETA[i+1]]
@@ -507,7 +511,7 @@ Assembly arrays are required to assemble local discretized geometries to global 
 	\end{verbatim}
 \end{enumerate}
 \subsubsection{Boundary Conditions}
-A brief description of how to define boundary conditions (BCS) is described in this section. When the order of the NURBS curve is two in each direction, a traditional way of defining homogeneous and inhomogeneous boundary conditions as in FEM can be followed. In any other case, a special treatment for defining BCS have to be followed, which is not in the scope of this project. As discussed before, an exception is when all the control points are on the surface itself, we can use common way of defining BCS. Procedures like the least square minimization method are usually adopted for this purpose. 
+A brief description of how to define boundary conditions (BCS) is described in this section. When the order of the NURBS curve is two in each direction, a traditional way of defining homogeneous and inhomogeneous boundary conditions as in FEM can be followed. In any other case, a special treatment for defining BCS have to be followed, which is not in the scope of this project. Procedures like the least square minimization method are usually adopted for this purpose. As discussed before, an exception is when all the control points are on the surface itself, we can use common way of defining BCS.
 
 
 \subsection{Processing Stage of the Analysis} \label{ProcessingStage}
@@ -667,7 +671,7 @@ displacement and solution dependent variables are plotted.
 
 \subsection{Governing Equations}
 The governing equation for mechanical deformation is based on conservation of
-linear momentum which can be written as
+linear momentum which can be written as \cite{Dr.Huetter2019}
 \begin{equation}\label{ConservationOfLM}
 \sigma_{ij,i} + b_j = 0
 \end{equation}
@@ -984,7 +988,7 @@ Newton-Raphson method for displacements and potential solution fields.
 \subsection{2D Plate under linear elastic loading} 
 \subsubsection{Problem description} \label{2DPWLELPD}
 A 2D plate is subjected to mechanical loading as shown in Figure(\ref{XYLoading}). The material used is PZT-PIC151 ceramics \cite{kozinov2018simulation}, and the elastic constants of the material are given in the appendix (\ref{MaterialProps}).
-The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction. A displacement of 0.1 mm is given on the right edge BD.
+The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction. A displacement of 100 nm (1e-4 mm) is given on the right edge BD.
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{.5\textwidth}
@@ -1052,7 +1056,7 @@ The 2nd order NURBS curve is used in both $\xi$ and $\eta$ directions. \\
 		\end{tabular}
 	\end{center}
 	with the fourth value in the parentheses being weights of respective control points.
-	**As this is the case of single element, there is no need for the control point
+	As this is the case of single element, there is no need for the control point
 	assembly array and knot vector connectivity matrix.
 \end{enumerate}
 \subsubsection{Results and discussions} \label{ResultsMech}
@@ -1069,7 +1073,7 @@ Figure(\ref{M1U1}) and Figure(\ref{M1U1_IGA}) show the displacement (U1) values 
 		\captionof{figure}{CPE4 Element:U1 \\\textbf{Abaqus generated result}}
 		\label{M1U1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.55\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{M1U1_IGA.png}
 		\captionof{figure}{IGA Element:U1 \\ \textbf{Program generated result}}
@@ -1101,7 +1105,7 @@ Figure(\ref{M1U2}) and Figure(\ref{M1U2_IGA}) show the displacement (U2) values 
 		\\\textbf{Abaqus generated result}}
 		\label{M1U2}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.55\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{M1U2_IGA.png}
 		\captionof{figure}{IGA Element:U2\\ \textbf{Program generated result}}
@@ -1121,7 +1125,7 @@ Figure(\ref{M1RF1}) and Figure(\ref{M1RF1_IGA}) show the Reaction force values (
 		\\\textbf{Abaqus generated result}}
 		\label{M1RF1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.65\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{M1RF1_IGA.png}
 		\captionof{figure}{IGA Element:RF1\\ \textbf{Program generated result}}
@@ -1142,7 +1146,7 @@ As shown in figures above the values generated by IGA code are in-line with the 
 \subsection{2D Plate under pure Electrical loading}
 \subsubsection{Problem description}\label{2DPWPELPD}
 A 2D plate is subjected to Electrical loading as shown in Figure(\ref{PureElectrical22}).The material used is PZT-PIC151 ceramics, and the dielectric constants can be seen in Appendix (\ref{MaterialProps})
-The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction.The top edge CD is grounded ( potential = 0 volts). An electrical potential V of 1000 volts is applied on bottom edge AB as shown in Fig. (\ref{PureElectrical22})
+The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction.The top edge CD is grounded ( potential = 0 volts). An electrical potential V of 100 Volts is applied on bottom edge AB as shown in Fig. (\ref{PureElectrical22})
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{.4\textwidth}
@@ -1151,9 +1155,9 @@ The movement of bottom edge AB is fixed in y-direction and left edge AC in x-dir
 		\captionof{figure}{2D Plate}
 		\label{2Dplate}
 	\end{minipage}%
-	\begin{minipage}{.4\textwidth}
+	\begin{minipage}{.3\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{PureElectrical.png}
+		\includegraphics[width=1.2\linewidth]{PureElectrical.png}
 		\captionof{figure}{2D Plate with pure electrical loading}
 		\label{PureElectrical22}
 	\end{minipage}
@@ -1178,7 +1182,7 @@ Figure(\ref{E1EPOT}) and Figure(\ref{E1EPOT_IGA}) show the Electrical potential 
 		\captionof{figure}{CPE4E Element:EPOT \\\textbf{Abaqus generated result}}
 		\label{E1EPOT}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.7\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{E1EPOT_IGA.png}
 		\captionof{figure}{IGA Element:EPOT \\ \textbf{Program generated result}}
@@ -1210,7 +1214,7 @@ Figure(\ref{E1RCHG}) and Figure(\ref{E1RCHG_IGA}) show the reactive nodal charge
 		\\\textbf{Abaqus generated result}}
 		\label{E1RCHG}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{E1RCHG_IGA.png}
 		\captionof{figure}{IGA Element:RCHG \\ \textbf{Program generated result}}
@@ -1243,7 +1247,7 @@ A 2D piezoelectric plate subjected to mechanical displacements is considered, as
 	\end{minipage}
 \end{figure}
 The movement of the bottom edge AB and left edge AC of 2D piezoelectric plate is fixed in y-direction and x-direction respectively, as shown in figure(\ref{EMLoading}).
-The top edge CD is grounded (Electric potential $\Phi = 0$), and a displacement load of 0.1 mm is applied on the right edge BD. The results for a single element case and multiple elements are discussed in the below
+The top edge CD is grounded (Electric potential $\Phi = 0$), and a displacement load of 100 nm (1e-4 mm) is applied on the right edge BD. The results for a single element case and multiple elements are discussed in the below
 sections. \\
 The results generated by IGA code is compared with inbuilt Abaqus piezoelectric
 element \textbf{CPE4E}.
@@ -1266,7 +1270,7 @@ Figure(\ref{EM1U1}) and Figure(\ref{EM1U1_IGA}) show the displacement (U1) value
 		\\\textbf{Abaqus generated result}}
 		\label{EM1U1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM1U1_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U1\\ \textbf{Program generated result}}
@@ -1284,7 +1288,7 @@ Figure(\ref{EM1U2}) and Figure(\ref{EM1U2_IGA}) show the displacement (U2) value
 		\\\textbf{Abaqus generated result}}
 		\label{EM1U2}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM1U2_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U2\\ \textbf{Program generated result}}
@@ -1319,7 +1323,7 @@ Figure(\ref{EM1RF1}) and Figure(\ref{EM1RF1_IGA}) show the Reaction force values
 		\\\textbf{Abaqus generated result}}
 		\label{EM1RF1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM1RF1_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:RF1\\ \textbf{Program generated result}}
@@ -1339,7 +1343,7 @@ Figure(\ref{EM1EPOT}) and Figure(\ref{EM1EPOT_IGA}) show the Electrical potentia
 		\\\textbf{Abaqus generated result}}
 		\label{EM1EPOT}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM1EPOT_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:EPOT\\ \textbf{Program generated result}}
@@ -1347,12 +1351,12 @@ Figure(\ref{EM1EPOT}) and Figure(\ref{EM1EPOT_IGA}) show the Electrical potentia
 	\end{minipage}
 \end{figure}
 \subsubsection{Conclusion}
-As shown in the figures above, the values generated by the IGA code for an electro-mechanical coupling with mechanical input are in line with the results of the Abaqus element. So it can be concluded that IGA code written works well with a 2D one element piezoelectric case with displacement loading.
+As shown in the figures above, the values generated by the IGA code for an electro-mechanical coupling with mechanical input are in line with the results of the Abaqus element. It can be concluded that IGA code written works well with a 2D one element piezoelectric case with displacement loading.
 
 \subsubsection{Comparison of electro-mechanical coupling with pure mechanical case}
-If we consider the problems in section (\ref{2DPWLELPD}) and section (\ref{2DPPWMLPD}), both have same boundary conditions and are loaded in the same way with 0.1 mm displacement in the x-direction. But in the latter case electro-mechanical coupling is taken into consideration.
+If we consider the problems in section (\ref{2DPWLELPD}) and section (\ref{2DPPWMLPD}), both have same boundary conditions and are loaded in the same way with 100 nm displacement in the x-direction. But in the latter case electro-mechanical coupling is taken into consideration.
 
-As seen in the Fig. (\ref{M1RF1_IGA}) and Fig. (\ref{EM1RF1_IGA}) a small difference in reaction force values can be observed due to the considered electro-mechanical coupling in the latter case. Similarly we can find the difference in U2 values as well due to the coupling (refer Fig.(\ref{M1U2_IGA}) and refer Fig. (\ref{EM1U2_IGA}))
+As seen in the Fig. (\ref{M1RF1_IGA}) and Fig. (\ref{EM1RF1_IGA}) a difference in reaction force values can be observed due to the considered electro-mechanical coupling in the latter case. Similarly we can find the difference in U2 values as well due to the coupling (refer Fig.(\ref{M1U2_IGA}) and refer Fig. (\ref{EM1U2_IGA}))
 
 \subsubsection{Parametric details for the plate with 2 elements in x-direction and  3 elements in y-direction} \label{ParaMultiEle}
 The 2nd order NURBS curve is used in both $\xi$ and $\eta$ directions. \\
@@ -1433,7 +1437,7 @@ Figure(\ref{EM23U1}) and Figure(\ref{EM23U1_IGA}) show the displacement (U1) val
 		\\\textbf{Abaqus generated result}}
 		\label{EM23U1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM23U1_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U1\\ \textbf{Program generated result}}
@@ -1466,7 +1470,7 @@ Figure(\ref{EM23U2}) and Figure(\ref{EM23U2_IGA}) show the displacement (U2) val
 		\\\textbf{Abaqus generated result}}
 		\label{EM23U2}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM23U2_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U2\\ \textbf{Program generated result}}
@@ -1483,7 +1487,7 @@ Figure(\ref{EM23RF1}) and Figure(\ref{EM23RF1_IGA}) show the Reaction force valu
 		\\\textbf{Abaqus generated result}}
 		\label{EM23RF1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM23RF1_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:RF1\\ \textbf{Program generated result}}
@@ -1501,7 +1505,7 @@ Figure(\ref{EM23EPOT}) and Figure(\ref{EM23EPOT_IGA}) show the Electrical potent
 		\\\textbf{Abaqus generated result}}
 		\label{EM23EPOT}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EM23EPOT_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:EPOT\\ \textbf{Program generated result}}
@@ -1536,7 +1540,7 @@ A 2D piezoelectric plate subjected to electrical loading is considered, as shown
 	\end{minipage}
 \end{figure}
 The movement of the bottom edge AB and left edge AC of 2D piezoelectric plate is fixed in y-direction and x-direction respectively, as shown in figure(\ref{PureElectrical}).
-The top edge CD is grounded (Electric potential $\Phi = 0$), and an electrical potential of 1000 V  is applied on the bottom edge AB. The results for a single element case and multiple elements are discussed in the below
+The top edge CD is grounded (Electric potential $\Phi = 0$), and an electrical potential of 100 V  is applied on the bottom edge AB. The results for a single element case and multiple elements are discussed in the below
 sections. \\
 The results generated by IGA code is compared with inbuilt Abaqus piezoelectric
 element \textbf{CPE4E}.
@@ -1559,7 +1563,7 @@ Figure(\ref{EME1U1}) and Figure(\ref{EME1U1_IGA}) show the displacement (U1) val
 			\\\textbf{Abaqus generated result}}
 		\label{EME1U1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.55\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME1U1_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U1\\ \textbf{Program generated result}}
@@ -1577,7 +1581,7 @@ Figure(\ref{EME1U2}) and Figure(\ref{EME1U2_IGA}) show the displacement (U2) val
 			\\\textbf{Abaqus generated result}}
 		\label{EME1U2}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.55\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME1U2_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U2\\ \textbf{Program generated result}}
@@ -1611,7 +1615,7 @@ Figure(\ref{EME1EPOT}) and Figure(\ref{EME1EPOT_IGA}) show the Electrical potent
 			\\\textbf{Abaqus generated result}}
 		\label{EME1EPOT}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME1EPOT_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:EPOT\\ \textbf{Program generated result}}
@@ -1629,7 +1633,7 @@ Figure(\ref{EME1RCHG}) and Figure(\ref{EME1RCHG_IGA}) show the Reactive electric
 			\\\textbf{Abaqus generated result}}
 		\label{EME1RCHG}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME1RCHG_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:RCHG\\ \textbf{Program generated result}}
@@ -1637,11 +1641,11 @@ Figure(\ref{EME1RCHG}) and Figure(\ref{EME1RCHG_IGA}) show the Reactive electric
 	\end{minipage}
 \end{figure}
 \subsubsection{Conclusion}
-As shown in the figures above, the values generated by the IGA code for an electro-mechanical coupling with electrical input are in line with the results of the Abaqus element. So it can be concluded that IGA code written works well with a 2D one element piezoelectric case with a given voltage difference on the surface.
+As shown in the figures above, the values generated by the IGA code for an electro-mechanical coupling with electrical input are in line with the results of the Abaqus element. It can be concluded that IGA code written works well with a 2D one element piezoelectric case with a given voltage difference on the surface.
 
 \subsubsection{Comparison of electro-mechanical coupling with pure electrical case}
-Considering the problems in section (\ref{2DPWPELPD}) and section (\ref{2DPPWEL}), the 2D plate is grounded on the top edge and applied a potential of 1000 V on the bottom edge. But in the latter case electro-mechanical coupling is taken into consideration.
-As seen in the Fig. (\ref{E1RCHG_IGA}) and Fig. (\ref{EME1RCHG_IGA}) a small difference in RCHG values can be observed due to the considered electro-mechanical coupling in the latter case.
+Considering the problems in section (\ref{2DPWPELPD}) and section (\ref{2DPPWEL}), the 2D plate is grounded on the top edge and applied a potential of 100 V on the bottom edge. But in the latter case electro-mechanical coupling is taken into consideration.
+As seen in the Fig. (\ref{E1RCHG_IGA}) and Fig. (\ref{EME1RCHG_IGA}) a difference in RCHG values can be observed due to the considered electro-mechanical coupling in the latter case.
 
 \subsubsection{Parametric details for the plate with 2 elements in x-direction and  3 elements in y-direction}
 
@@ -1660,7 +1664,7 @@ Figure(\ref{EME23U1}) and Figure(\ref{EME23U1_IGA}) show the displacement (U1) v
 			\\\textbf{Abaqus generated result}}
 		\label{EME23U1}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME23U1_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U1\\ \textbf{Program generated result}}
@@ -1693,7 +1697,7 @@ Figure(\ref{EME23U2}) and Figure(\ref{EME23U2_IGA}) show the displacement (U2) v
 			\\\textbf{Abaqus generated result}}
 		\label{EME23U2}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME23U2_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:U2\\ \textbf{Program generated result}}
@@ -1711,7 +1715,7 @@ Figure(\ref{EME23EPOT}) and Figure(\ref{EME23EPOT_IGA}) show the Electrical pote
 			\\\textbf{Abaqus generated result}}
 		\label{EME23EPOT}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME23EPOT_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:EPOT\\ \textbf{Program generated result}}
@@ -1729,7 +1733,7 @@ Figure(\ref{EME23RCHG}) and Figure(\ref{EME23RCHG_IGA}) show the Reactive electr
 			\\\textbf{Abaqus generated result}}
 		\label{EME23RCHG}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.6\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{EME23RCHG_IGA.png}
 		\captionof{figure}{IGA Piezoelectric Element:RCHG\\ \textbf{Program generated result}}
@@ -1746,7 +1750,7 @@ As shown in figures above for a 6 elements case, the results generated by IGA co
 The problem statement is same as in section (\ref{2DPPWMLPD}) (2D Piezoelectric plate under mechanical loading).
 
 \subsubsection{Order of NURBS basis functions}
-In the present load case, a 3rd order basis function in $\xi$ direction and 4th order basis function in $\eta$ direction is considered.
+In the present load case, a 3rd order basis functions in $\xi$ direction and 4th order basis functions in $\eta$ direction are considered.
 
 \subsubsection{Results and discussions}
 
@@ -1809,15 +1813,100 @@ Figure(\ref{EM23EPOT_IGA_1}) and Figure(\ref{HEM12EPOT_IGA}) show the Electrical
 \end{figure}
 
 \subsubsection{Conclusion}
-Since the surface is captured exactly in both the cases (2nd order and higher-order NURBS surface) we can expect the same results for DOF values on control points.  
+Since the surface is captured exactly in both the cases (2nd order and higher-order NURBS surface), we can expect the same results for DOF values on control points. The written code gives correct results for higher-order NURBS basis functions provided the control points are on the surface.  
 
 
 
 
  
 
+\newpage
+\section{Bottleneck in the code}
+\subsection{Aim}
+The test case is for checking the computation time taken by each function in the code to find the possible bottleneck of the written Isogeometric analysis code.
+\subsection{Problem description} \label{2DPWLELPD}
+A 2D plate is subjected to mechanical loading as shown in Figure(\ref{TimeitLoading}). The material used is PZT-PIC151 ceramics.
+The movement of bottom edge AB is fixed in y-direction and left edge AC in x-direction. A displacement of 100 nm (1e-4 mm) is given on the right edge BD and 200nm (2e-4 mm) on top edge CD.
+\textbf{The analysis is done for 50 control points in each direction and 2nd order NURBS basis functions, to get a clear picture of the analysis time for each function.}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.8\linewidth]{2DPlate.png}
+		\captionof{figure}{2D Plate}
+		\label{2Dplate}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{TimeitLoading.png}
+		\captionof{figure}{2D Piezoelectric Plate with loading}
+		\label{TimeitLoading}
+	\end{minipage}
+\end{figure}
+\textbf{timeit} package in python is used to compute time taken by a function. A sample code is shown below.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.9]{TimeitCode.png} 
+		\caption{\\Sample code calculating the computation time of a function}\label{TimeitCode}
+	\end{center}	
+\end{figure}
+\subsection{Findings and Conclusion} \label{Findings}
 
+Below is the data generated by using timeit. The code is written to generate the data regarding number of times each function is called in the program and total time taken by each function in the analysis.\\
+From the below values we can see that the time taken by "SurfaceDerivsAlgAuv" Function and "B\_matrix" Function is more when compared to other functions apart from element routine. \\
+"SurfaceDerivsAlgAuv" Function is used to compute derivatives of the NURBS bi-variate basis functions.\\ 
+Derivatives of basis functions are handled differently in IGA compared to FEM because of the recursive nature of the NURBS basis functions. Optimizing "SurfaceDerivsAlgAuv" function is necessary to reduce overall computation time.\\
+\textbf{Program generated data for 50 control points in each direction}
 
+\begin{verbatim}
+"KnotVector" Fucntion is called for 2 times.
+Time taken for single time function execution:  1.5964999988682393e-05
+Total time taken by the function in complete analysis:  3.021800000624353e-05
+
+"FindSpan" Fucntion is called for 120248 times.
+Time taken for single time function execution:  1.0263000007171286e-05
+Total time taken by the function in complete analysis:  0.44270469899998943
+
+"BasisFuns" Fucntion is called for 158664 times.
+Time taken for single time function execution:  3.306900001120994e-05
+Total time taken by the function in complete analysis:  2.1537873399999796
+
+"DersBasisFuns" Fucntion is called for 230496 times.
+Time taken for single time function execution:  5.302499999970678e-05
+Total time taken by the function in complete analysis:  10.28354588900001
+
+"ControlPointAssembly" Fucntion is called for 4802 times.
+Time taken for single time function execution:  0.00010034799998948074
+Total time taken by the function in complete analysis:  0.25946407300000374
+
+"materialRoutine" Fucntion is called for 19208 times.
+Time taken for single time function execution:  7.469100000889739e-05
+Total time taken by the function in complete analysis:  0.7070453440000222
+
+"elementRoutine" Fucntion is called for 4802 times.
+Time taken for single time function execution:  0.0065517000000170356
+Total time taken by the function in complete analysis:  32.14903563299998
+
+"Jacobian12" Fucntion is called for 38424 times.
+Time taken for single time function execution:  0.00047551299999781804
+Total time taken by the function in complete analysis:  17.596252571999997
+
+"B_matrix" Fucntion is called for 38424 times.
+Time taken for single time function execution:  0.0010496630000034202
+Total time taken by the function in complete analysis:  37.19408733499998
+
+"NURBS_Surface_Point" Function is called for 2500 times.
+Time taken for single time function execution:  6.0437000001911656e-05
+Total time taken by the function in complete analysis:  0.11756569399994987
+
+"SurfaceDerivsAlgAuv" Function is called for 153700 time.
+Time taken for single time function execution:  0.00040823400001954724
+Total time taken by the function in complete analysis:  64.39044447399999
+
+"GaussPoints" Function is called for 1 time.
+Time taken for single time function execution:  4.390300000522984e-05
+Total time taken by the function in complete analysis:  4.903399997147062e-05
+\end{verbatim}
 \newpage
 \section{Milestones achieved}
 The following table describes the proposed coding activities and achieved activities.
@@ -1846,6 +1935,29 @@ The following table describes the proposed coding activities and achieved activi
 To develop a code for Isogeometric analysis, it demands the understanding of NURBS theory, apart from the knowledge in the field of FEM. Although the NURBS book gives a clear picture of how to generate a curve and a surface, it is not designed to give a clear insight on how to work with Isogeometric analysis. For example, we can find the derivatives of the NURBS basis functions only but not the derivatives of bivariate basis functions (which are used in NURBS surface). Since basis functions are of recursive nature, it is no more straight forward to derivate the functions and requires a deep insight into the theory that goes with it. One can find much material regarding IGA analysis online, but when it comes to derivatives of bivariate basis functions, there is not much to refer. It took time and effort to get the right combination of material to understand the way to derivate, and the next major task is to write code. As the NURBS basis functions are defined in parametric space, as discussed in section(\ref{ProcessingStage}), it is not straight forward to map physical space on to master space like in FEM. The addition of parametric space makes things a little complicated because the derivatives have to be defined in three different spaces. An introduction paper on IGA by Vishal et al. \cite{agrawal2019iga} , gave a clear picture of these mappings. Unlike FEM, which contains a fixed number of nodes, this is not the case with IGA, where the number of control points (equivalent term to nodes in FEM) in each element depends on the parametric details of the NURBS curve/surface. A generalized way has to be adopted to formulate matrices involved in the analysis (like B matrix, Stiffness matrix, DOF array and Global force array) so that it does not require to reformulate the code every time the parametric details change (which is the primary purpose of IGA to reduce the time involved in meshing the geometry as in FEM). Moreover, extending a code from a single element to multiple elements requires two types of connecting arrays namely knot and control points connectivity arrays as discussed in section(\ref{AssemblyArrays}). So the code has to handle additional connectivity. Lastly defining boundary conditions need special techniques, unlike FEM.
 
 \newpage
+\section{How to run the Program}
+	Every test case is provided with a
+\textbf{Readme} (Contains Aim, Expected and Obtained Results and instructions to run the program)in order to facilitate the usage of code.
+\begin{enumerate}[leftmargin=*]
+
+	\item The code is written in python and external libraries numpy, matplotlib.pyplot, sys, path from pathlib,timeit and math are used.
+	\item Please use any environment which will compile python programs
+	\item Place all the files in a single folder.
+	\item A file named Input.py can be edited to change the dimensions of the plate. User can change Length, Height and Thickness of the plate. \\(The results discussed are for Length = 10 mm, Height = 10 mm and Thickness = 1 mm)
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.8]{Input.png} 
+		\end{center}	
+	\end{figure}
+	\item Before you run the file, please make sure that the working directory is same as the folder  which
+	consists the Program.
+	\item Use command  $>>>$ python Main\_Program.py \\ to run the program.
+	\item The contour plots will be saved in the folder \textbf{Results.}
+	\item A "log.txt" file is created in the same folder which contains the values of the results plotted.
+	
+	
+\end{enumerate}
+\newpage
 \section{Conclusion}
 In this project, an Isogeometric analysis code is developed to create NURBS surface using parametric details and use the same basis functions to analyze Linear elastic mechanical loading and later extended to electro-mechanical coupling. The code is written in such a way that, it can analyze a 2D geometry with up to 4th order NURBS basis functions ( the order of the basis functions in each direction can vary, for example, a surface can be generated using 3rd order basis functions in $\xi$ direction and 2nd order basis functions in $\eta$ direction). The drawback of the written code is, it gives accurate results for a 2nd order NURBS basis functions but fails to produce correct results for higher-order basis functions. This is because unlike FEM, where boundary conditions can be applied on nodes, the same procedure cannot be followed for IGA.  The control points may not lie on the surface for higher-order NURBS surface, and points defining the boundary needs to be identified. The results of the IGA code are verified with the Abaqus elements for 2nd order NURBS curve.
 
@@ -1873,29 +1985,380 @@ C = \begin{bmatrix}
 $$  
 $$
 e = \begin{bmatrix}
-0 & -9.6e-6 & 0 \\
-0 & 15.1e-6 & 0 \\
-0 & -9.6e-6 & 0\\
+0 & -9.6e-3 & 0 \\
+0 & 15.1e-3 & 0 \\
+0 & -9.6e-3 & 0\\
 12.0e-6 & 0 & 0 \\
 0 & 0 & 0 \\
 0 & 0 & 12.0e-6 \\
-\end{bmatrix} C/ mm`2
+\end{bmatrix} N/V mm
 $$
 $$
-\varepsilon = \begin{bmatrix}
-7.54e-12 & 0 & 0 \\
-0 & 9.82e-12 & 0 \\
-0 & 0 & 7.54e-12\\
-\end{bmatrix} C/(V mm)
+\kappa = \begin{bmatrix}
+7.54e-9 & 0 & 0 \\
+0 & 9.82e-9 & 0 \\
+0 & 0 & 7.54e-9\\
+\end{bmatrix} N/ V^{2}
 $$
 where \\
-e is Piezoelectric constants.
+e are Piezoelectric constants.
 
+\newpage
 
+\section{Git log}
+\begin{Verbatim}[breaklines=true]
+commit 7121cda6949a97187e992facf2540a035ad4dccf
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Apr 5 02:11:40 2020 +0200
+Complete working code. Changed the plotting font size and plotted on scientific scale for some values
 
+commit d0d2647103625a60685698e9696438fa85603604
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Apr 3 02:39:47 2020 +0200
+Backup for an working code without error
 
+commit 6f8362ee92d2313c1ebe816b37f669d79b6ded50
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Mar 27 16:44:40 2020 +0100
+Complete report with all the results and implementation details
 
+commit 802790e42b9c2532b9d9e65ab59f88d61dc7f3e1
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Mar 27 16:43:14 2020 +0100
+Complete Working code for all mechanical, electrical and electro-mechanical coupling cases
 
+commit a5af9873d7432577ffcc5c9bcbae0ec1f809f641
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Mar 21 21:32:28 2020 +0100
+Git Backup before furthur modifications 21st march
+
+commit 00227969b8ce5c4bb44c125a56af9bb277e8de09
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Feb 26 20:11:24 2020 +0100
+Code with multiple elements and degree of NURBS Curve
+
+commit 53589f56f1b2eff03db18dcaea7da3d3d50ba749
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Feb 17 13:03:16 2020 +0100
+Added results section. In progress
+
+commit ce3cb3b705bbc8b3902768fbbefa93d0f9b950bf
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Feb 17 02:34:50 2020 +0100
+Changed geometry file. Code will work for any degree in xi and eta directons. Have to generalize gauss points
+
+commit 6f2201614f6af8d670418065d05ee61848849d56
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Tue Feb 11 22:08:18 2020 +0100
+Code has been extended to NURBS Degree of any order
+
+commit 0f9f04d8e833f96637365080462045d1cfb7440f
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Feb 8 14:25:12 2020 +0100
+Connectivity for more than one element is coded successfully
+
+commit 43acf544de73572e872035b1e9357bb0b7530639
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Feb 3 19:44:31 2020 +0100
+Results checked for multiple elements and are correct, Have to check the results in detail
+
+commit b658ddb716e2b860f710d11c19f8dada97f05fd1
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Feb 2 02:22:58 2020 +0100
+Started documenting Problem description
+
+commit 808b5058b947a789645bb7828780492f51642718
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Jan 29 01:13:58 2020 +0100
+Derivatives of NURBS bivariate is added to documentation
+
+commit 4fb01b8f7f5cdc96747739ebbdfe81add29c2d12
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Jan 29 00:33:48 2020 +0100
+Connectivity for coupling case in progress
+
+commit 7b2f315d2958297cc350ed4228d41af59887ee48
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Jan 27 23:07:24 2020 +0100
+Code has been extended for connectivity. Have to debug errors and check the results
+
+commit f35130a0d00322a757295bbb48a0bab21a6e162c
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Jan 27 01:44:24 2020 +0100
+Assignment matrix under progress
+
+commit caa45cb94742e197dec1914a90952481c97cd748
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Jan 25 20:05:31 2020 +0100
+Coupling code with output of stress and strain values at gauss points
+
+commit ad32a5346ae3d7f96af88bdbc7c1086c2b847111
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Jan 24 01:29:20 2020 +0100
+Updated till post processing of deformed geometry
+
+commit 8d7767407fb6db54b049d863104c5653553a199d
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Thu Jan 23 02:45:42 2020 +0100
+Documetation under progress. Written till preprocessign stage of IGA
+
+commit 6c47769d0a0159cec9c161bc932fe86ce24d95f7
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Thu Jan 23 01:06:06 2020 +0100
+Documentation under progress. Documentation as on 22-01-2020
+
+commit aeab0484acff295754ef3b8bd1138b3903de26a3
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Jan 18 17:05:31 2020 +0100
+Files have been changed to Displacement driven Analysis, Have to cross check results with abaqus results
+
+commit c52821a2f05e54fb3a5e7694a5a8fd87513a98d7
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Jan 15 10:03:57 2020 +0100
+Files before changing it to displacement driven Analysis
+
+commit cca83c20b0645fe7388235ac2fe61460aa1038e8
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Jan 13 21:09:16 2020 +0100
+Changed boundary conditions according to the test case available in UEL
+
+commit 715ad610289b0eb6cc84e123f42b2f797c48e186
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Jan 10 22:50:27 2020 +0100
+Polarization values generated are not correct have to check the signs of Be and K_EE Matrix
+
+commit 281baa2cef8a5a1030ae0e15d94a118ebec5ebe0
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Jan 10 21:37:48 2020 +0100
+Extended all the programs to electrical degrees of freedom. Have to debug the errors for convergence and for the correctness of the results
+
+commit 5c865b1766e067812d7e888b7860319d4f55de36
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Dec 28 14:46:05 2019 +0100
+Created seperate files for Main program, Element routine, Material routine, Matrial properties and Geometry. Sorted the data into files and checked for convergence. The results generated are satisfactory, Need to perform more test cases
+
+commit e3b1246e432753dcf1a8a375d5e7510150bc06b5
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Dec 27 21:06:58 2019 +0100
+preprocessing_functions is added with NURBS surface point algorithm, Check for point on NURBS surface,Test case is successful,Also surface is plotted looping over the knot span
+
+commit 28f28c55d1bd491fd92120e498f054a74dbcf904
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Thu Dec 26 20:05:56 2019 +0100
+Added Findspan, Basis Functions, Derivatives of basis functions, Surface derivatives and Rational Spline surface derivatives and tested as done before
+
+commit a05ba916bdc0a5791dc28ce0aeb40133e3d9c65d
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Thu Dec 26 18:38:17 2019 +0100
+Created a seperate preprocessing_function.py file to combine and use all the preprocessing functions created till now
+
+commit 10b424e5ae3036ad0924a64b9b9e1038e74125f4
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 25 20:53:24 2019 +0100
+Written Material routine and element routine flow. Have to arrange data into proper import files and complete main program
+
+commit 20cb0887139aee7f5702731995c9ad1552f61479
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 25 10:51:36 2019 +0100
+Stiffnes matrix generated is inline with fem code
+
+commit e9692287d7dd6db0fc01986a05dc4bd746b65246
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 25 02:27:21 2019 +0100
+Code till B matrix is done, Have to check for correctness of results
+
+commit 3d7659ab657ef6a4cca0c7c82d76da3b5d9a56d1
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Tue Dec 24 00:38:22 2019 +0100
+Generated Local stiffness matrix, Have to debug the errors
+
+commit 00e700db9be0e00c1b6387bb160baff03a972931
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Tue Dec 24 00:01:26 2019 +0100
+Copied Derivatives of NURBS Basis functions verified algorithm
+
+commit ca6f4d8171c7ba052b036115663ff13d4550ac21
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 23 22:48:16 2019 +0100
+Problem with indexing, Have to sort it out
+
+commit 5a21302ee24c08072db57113599945ae0c1b4a59
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 23 20:38:12 2019 +0100
+Have written the flow for derivativ of NURBS Basis function
+
+commit e169a571b158c4f8468bf90c37b8f74773f30d25
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 23 20:36:14 2019 +0100
+Have written the flow for derivativ of NURBS Basis function
+
+commit 83cab6d1814948380d9aca5150fffbcdc72e8da6
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 23 14:37:58 2019 +0100
+Should verify the NURBS basis functions derivatives wrt x and y global co-ordinates
+
+commit 44cb3dd63fcb776cd3efbfed05f253bc6ab504e8
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Dec 22 15:17:51 2019 +0100
+No major modifications only changed matrix dimensions
+
+commit 41f0970034f0fb92311509e03605cc39facac7bb
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Dec 22 15:17:12 2019 +0100
+Modified SKL matrix dimensions and p is changed to q in loop min()
+
+commit a8fefc2e800ea33e296c1d6016e86d12fce1ab62
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Dec 22 15:15:40 2019 +0100
+Jacobian matrix is generated as expected
+
+commit 63de87ddabb1c08731df404fc43d146757249f46
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Dec 21 11:50:07 2019 +0100
+Started with stiffness matrix and assembly functions, have to extend the code
+
+commit 5aff7aa584ca82d5573de3ff5e66caea044a3081
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Dec 21 11:48:30 2019 +0100
+Changed array dimensions for SKL, the value of k+l should lie between 0 and d,made changes with that
+
+commit 8cca1e935d58e9632e635db13cd5381624064c4e
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 18 22:33:59 2019 +0100
+The function to generate derivatives of a 2D NURBS is coded and test case with weights as 1 is tested, The results are satisfactory,The result with different weight functions have to be evaluated with any source
+
+commit 7f17ec887f46179886d67ffb86cbe92a78aa163f
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 18 19:49:38 2019 +0100
+Algorithm to find derivative of W(u) is working and tested with example
+
+commit b1e982015325ff6aa0324d03198370ef1f47ec02
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 18 19:49:21 2019 +0100
+Algorithm to find derivative of A(u) is working and tested with example
+
+commit ed72cded5952e7f530a5f172da2aa0d7c98bca20
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 18 19:48:42 2019 +0100
+Algorithm is working and tested wit example
+
+commit 93d03a3dd030408efaf81ad603c9bdc613a27a2a
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 18 19:47:58 2019 +0100
+Changed function name to NURBS_surface point
+
+commit 8cbee8c2bb0253649fdfe5315440657ad4b52779
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Dec 18 02:03:01 2019 +0100
+Derivative at any point is calculated, Have to test it with more examples and have to solve the issue for last point derivative which cannot be derived due to no function value at last or end point
+
+commit e2a7de7c3c80feb12bbdbda289c079d0f031b882
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Tue Dec 17 16:10:30 2019 +0100
+Function is evaluated with test case
+
+commit e6930551e9d5cde4fdc43a2cd52d356b9391fb1f
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Tue Dec 17 14:30:39 2019 +0100
+Algorithm is completed have to check for errors
+
+commit cae24604d3c8e2924fc9e7ba5b2f8869c55b4c60
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 16 17:19:37 2019 +0100
+Documentation in progress 16/12
+
+commit 1b9aef3602710da24fcd5f05d73400639a82e815
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 16 16:09:42 2019 +0100
+Documentation in progress
+
+commit a8a87e123023ef35d55dd98a2ed1922a20a0b42d
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Dec 16 16:09:15 2019 +0100
+Documentation in progress
+
+commit 2ae0cbcb82ee866f22d908d28c547ae56992a879
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Dec 15 14:30:35 2019 +0100
+Documentation tex file as on 15-12-19
+
+commit d44772a0cc13e2393173d511c87dd2259b215d5e
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Dec 15 14:30:12 2019 +0100
+Documentation as on 15-12-19
+
+commit bb58a6607d0069e5fd50b40b41ab047108c16dbf
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Nov 29 19:37:28 2019 +0100
+Surface has been generated and surface plot is done. Have to solve the problem function not working for u and v values equal to last knot vector
+
+commit 161e642255cb635633ad5e4491ffdf974094f075
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Thu Nov 28 20:47:21 2019 +0100
+Function working and generating desired result. Need to loop over for extracting 4 points in surface point
+
+commit 395e6023d1294e62ac0ca0a4e6f9685ec293c510
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Mon Nov 25 02:13:44 2019 +0100
+Basis function for given index and degree is not giving out desired result. Have to check for potential errors
+
+commit 5d3a4236c8c2b108b641bfac29244ed5509670f6
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Fri Nov 22 23:01:17 2019 +0100
+Test case successful, Function working without errors
+
+commit 1386e28b5f55318f827b3b264d58c0e815118688
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Wed Nov 20 11:26:27 2019 +0100
+Developed find position in knot vector using linear search
+
+commit f563a93cc21482ec4acfbd4f8312cc64bc62e63d
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Nov 17 23:57:34 2019 +0100
+Plotting is proper with 2d array of control points
+
+commit c08194cf35de72cac1c30f787c241bb140ad2fc7
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Nov 17 23:54:40 2019 +0100
+Surface is not generated yet
+
+commit 1ebdd17fd4309fd18a55f869c107e0bd67a3bc73
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Nov 17 15:36:49 2019 +0100
+Bspline function is plotted and crossed checked have to write comments
+
+commit 1cdeddca7a1e80bf30d23451d0543fa2ee7a264e
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Nov 17 15:36:14 2019 +0100
+Bspline basis function is working fine
+
+commit 0a905e2a9689501605c50bda935438e3a9830439
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sun Nov 17 15:35:22 2019 +0100
+Updated knot vector changing order to degree
+
+commit 6730e792f84b58d513df40455949d6d38cb3ab33
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Nov 16 21:36:30 2019 +0100
+Bspline function is generated without errors
+
+commit e0ecf84b5e51c61388b9d14ed4905e7d373d9506
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Nov 16 19:25:48 2019 +0100
+Knot vectors generated properly without any error
+
+commit b73ee11f3be716d36c07140c29f9cb597c859f93
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Sat Nov 16 19:25:07 2019 +0100
+Code with solved problem for divided by zero error but B spline function is generating only zero valued array
+
+commit 63d0aeadd6aa8312fad907b650c8c4adf3721017
+Author: sakiv93 <vikas.sakiv93@gmail.com>
+Date:   Tue Oct 22 20:41:16 2019 +0200
+Generated knot vectors
+\end{Verbatim}
+
+\newpage
 
 
 \noindent
